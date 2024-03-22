@@ -9,7 +9,7 @@ Repository holds code and data for image classification model - of cars represen
 
 # Example
 ## Image
-![sample image](./input/lando-norris-mclaren-mcl35m-1.jpg)
+![sample image](./input/lando-norris-mclaren-mcl35m-1.png)
 
 ## Output
 ```
