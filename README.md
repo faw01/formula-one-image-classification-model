@@ -24,6 +24,38 @@ Repository holds code and data for image classification model - of cars represen
 9th Prediction: haas with 0.00% confidence.
 10th Prediction: renault with 0.00% confidence.
 ```
+# Model structure
+```
+Model: "sequential_1"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ conv2d_4 (Conv2D)           (None, 254, 254, 16)      448       
+                                                                 
+ max_pooling2d_3 (MaxPoolin  (None, 127, 127, 16)      0         
+ g2D)                                                            
+                                                                 
+ conv2d_5 (Conv2D)           (None, 125, 125, 32)      4640      
+                                                                 
+ max_pooling2d_4 (MaxPoolin  (None, 62, 62, 32)        0         
+ g2D)                                                            
+                                                                 
+ conv2d_6 (Conv2D)           (None, 60, 60, 16)        4624      
+                                                                 
+ max_pooling2d_5 (MaxPoolin  (None, 30, 30, 16)        0         
+ g2D)                                                            
+                                                                 
+ flatten_1 (Flatten)         (None, 14400)             0         
+                                                                 
+ dense_2 (Dense)             (None, 256)               3686656   
+                                                                 
+ dense_3 (Dense)             (None, 10)                2570      
+                                                                 
+=================================================================
+Total params: 3698938 (14.11 MB)
+Trainable params: 3698938 (14.11 MB)
+Non-trainable params: 0 (0.00 Byte)
+```
 
 # Sources / Acknowledgements
 ## F1 Cars
