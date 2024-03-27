@@ -7,6 +7,12 @@ Repository holds code and data for image classification model - of cars represen
 - `/models`: space for binary model file (h5 format),
 - `formula-one-image-classification.ipynb`: improved / fixed jupyter notebook explaining model training process (once again, by [faw](https://github.com/faw01)).
 
+# Docker image
+## Building
+`docker build --no-cache -t f1-image-classification-model:v0.6 -f Dockerfile .`
+## Running
+`docker run -it f1-image-classification-model:v0.6`
+
 # Example
 ## Image
 ![sample image](./input/lando-norris-mclaren-mcl35m-1.png)
