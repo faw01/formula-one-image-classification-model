@@ -7,6 +7,12 @@ Repository holds code and data for image classification model - of cars represen
 - `/models`: space for binary model file (h5 format),
 - `formula-one-image-classification.ipynb`: improved / fixed jupyter notebook explaining model training process (once again, by [faw](https://github.com/faw01)).
 
+# Docker image
+## Building
+`docker build --no-cache -t f1-image-classification-model:v0.6 -f Dockerfile .`
+## Running
+`docker run -it f1-image-classification-model:v0.6`
+
 # Example
 ## Image
 ![sample image](./input/lando-norris-mclaren-mcl35m-1.png)
@@ -60,4 +66,5 @@ Non-trainable params: 0 (0.00 Byte)
 # Sources / Acknowledgements
 ## F1 Cars
 ### classification model: [by faw, available here](https://github.com/faw01/formula-one-image-classification-model),
-### images dataset: [by Sérgio Gomes and José Henrique Brito, available here](https://github.com/2AiBAIT/F1CarsDataset).
+### images dataset: [by Sérgio Gomes and José Henrique Brito, available here](https://github.com/2AiBAIT/F1CarsDataset),
+### containerization and API creation: [by Aleksander Zawalich, available here](https://github.com/azawalich).
