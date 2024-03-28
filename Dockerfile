@@ -17,5 +17,5 @@ ADD input/formula-one-cars-images/train/williams/sample.png /app/input/williams/
 RUN apt update && apt upgrade \
   && apt install -y $(cat /tmp/apt) \
   && python -m pip install --no-cache-dir $(echo `cat /tmp/python`)
-ENTRYPOINT ["python", "-m", "uvicorn"]
+ENTRYPOINT ["python", "-m", "uvicorn", "--host", "0.0.0.0"]
 CMD ["main:app"]
