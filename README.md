@@ -66,4 +66,5 @@ Non-trainable params: 0 (0.00 Byte)
 # Sources / Acknowledgements
 ## F1 Cars
 ### classification model: [by faw, available here](https://github.com/faw01/formula-one-image-classification-model),
-### images dataset: [by Sérgio Gomes and José Henrique Brito, available here](https://github.com/2AiBAIT/F1CarsDataset).
+### images dataset: [by Sérgio Gomes and José Henrique Brito, available here](https://github.com/2AiBAIT/F1CarsDataset),
+### containerization and API creation: [by Aleksander Zawalich, available here](https://github.com/azawalich).
