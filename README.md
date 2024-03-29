@@ -9,9 +9,9 @@ Repository holds code and data for image classification model - of cars represen
 
 # Docker image
 ## Building
-`docker build --no-cache -t f1-image-classification-model:v0.6 -f Dockerfile .`
+`docker build --no-cache -t f1-image-classification-model:v0.7 -f Dockerfile .`
 ## Running
-`docker run -it f1-image-classification-model:v0.6`
+`docker run -it f1-image-classification-model:v0.7`
 
 # Example
 ## Image
