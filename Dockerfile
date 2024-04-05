@@ -14,7 +14,7 @@ ADD input/formula-one-cars-images/train/redbull/sample.png /app/input/redbull/sa
 ADD input/formula-one-cars-images/train/renault/sample.png /app/input/renault/sample.png
 ADD input/formula-one-cars-images/train/toro_rosso/sample.png /app/input/toro_rosso/sample.png
 ADD input/formula-one-cars-images/train/williams/sample.png /app/input/williams/sample.png
-RUN apt update && apt upgrade \
+RUN apt update && apt upgrade -y \
   && apt install -y $(cat /tmp/apt) \
   && python -m pip install --no-cache-dir $(echo `cat /tmp/python`)
 ENTRYPOINT ["python", "-m", "uvicorn", "--host", "0.0.0.0"]
