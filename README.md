@@ -2,36 +2,97 @@
 Repository holds code and data for image classification model - of cars representing particular teams in Formula 1.
 
 # Repository structure
+- `/assets`: place for code to be imported as modules later-on,
 - `/input`: data for model training, validation and testing are stored here. The amount of images commited is an example - I reduced their number to lessen the amount of storage held in GitHub/GitLab,
 - `/logs`: place for logs created during model training,
 - `/models`: space for binary model file (h5 format),
-- `formula-one-image-classification.ipynb`: improved / fixed jupyter notebook explaining model training process (once again, by [faw](https://github.com/faw01)).
+- `/requirements`: place for files with package requirements to be installed with specific system libraries,
+- `/static`: space for files to be served on a webpage with `uvicorn` framework,
+- `/templates`: place for website templates to be later-on rendered and served inside an app,
+- `formula-one-image-classification.ipynb`: improved / fixed jupyter notebook explaining model training process (once again, by [faw](https://github.com/faw01)),
+- `main.py`: Python file with API implementation and endpoints created with `FastAPI` framework,
+- `README.md`: `Markdown`-based file you are currently reading,
+- `requirements.txt`: file with minimum package requirements necessary for API to work properly,
+- `environment.yaml`: file with full package requirements, necessary for above-mentioned `jupyter notebook` to work without errors.
 
 # Docker image
 ## Building
-`docker build --no-cache -t f1-image-classification-model:v0.7 -f Dockerfile .`
+`docker build --no-cache -t f1-image-classification-model:v0.8 -f Dockerfile .`
 ## Running
-`docker run -it f1-image-classification-model:v0.7`
+`docker run -it f1-image-classification-model:v0.8`
 
 # Adding image to use in minikube
-`minikube image load f1-image-classification-model:v0.7`
+`minikube image load f1-image-classification-model:v0.8`
 
 # Example
+## Homepage
+![sample image](./images/classify-homepage.png)
+## Predict page
+![sample image 2](./images/classify-predict.png)
 ## Image
-![sample image](./input/lando-norris-mclaren-mcl35m-1.png)
+![sample image 3](./input/lando-norris-mclaren-mcl35m-1.png)
 
-## Output
+## Response output
 ```
-1st Prediction: mclaren with 99.96% confidence.
-2nd Prediction: bwt with 0.04% confidence.
-3rd Prediction: toro_rosso with 0.00% confidence.
-4th Prediction: williams with 0.00% confidence.
-5th Prediction: mercedes with 0.00% confidence.
-6th Prediction: haas with 0.00% confidence.
-7th Prediction: redbull with 0.00% confidence.
-8th Prediction: alfa_romeo with 0.00% confidence.
-9th Prediction: ferrari with 0.00% confidence.
-10th Prediction: renault with 0.00% confidence.
+{
+    "prediction": {
+        "class": "mclaren",
+        "confidence_percent": 99.96,
+        "message": "1st Prediction: mclaren with 99.96% confidence.",
+    },
+    "predictions": {
+        1: {
+            "class": "mclaren",
+            "confidence_percent": 99.96,
+            "message": "1st Prediction: mclaren with 99.96% confidence.",
+        },
+        2: {
+            "class": "bwt",
+            "confidence_percent": 0.04,
+            "message": "2nd Prediction: bwt with 0.04% confidence.",
+        },
+        3: {
+            "class": "toro_rosso",
+            "confidence_percent": 0.0,
+            "message": "3rd Prediction: toro_rosso with 0.00% confidence.",
+        },
+        4: {
+            "class": "williams",
+            "confidence_percent": 0.0,
+            "message": "4th Prediction: williams with 0.00% confidence.",
+        },
+        5: {
+            "class": "mercedes",
+            "confidence_percent": 0.0,
+            "message": "5th Prediction: mercedes with 0.00% confidence.",
+        },
+        6: {
+            "class": "haas",
+            "confidence_percent": 0.0,
+            "message": "6th Prediction: haas with 0.00% confidence.",
+        },
+        7: {
+            "class": "redbull",
+            "confidence_percent": 0.0,
+            "message": "7th Prediction: redbull with 0.00% confidence.",
+        },
+        8: {
+            "class": "alfa_romeo",
+            "confidence_percent": 0.0,
+            "message": "8th Prediction: alfa_romeo with 0.00% confidence.",
+        },
+        9: {
+            "class": "ferrari",
+            "confidence_percent": 0.0,
+            "message": "9th Prediction: ferrari with 0.00% confidence.",
+        },
+        10: {
+            "class": "renault",
+            "confidence_percent": 0.0,
+            "message": "10th Prediction: renault with 0.00% confidence.",
+        },
+    },
+}
 ```
 # Model structure
 ```
