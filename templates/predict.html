@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Formula 1 Model for Cars Classification - Prediction Page</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <link href="//vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet">
+    <link href="https://unpkg.com/@videojs/themes@1/dist/city/index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', path='script.js') }}"></script>
+  </head>
+  <body>
+    <div id="wrapper-predict">
+      {% if is_image == 1 %}
+      <div id="results">
+        <h1><b>Formula 1</b> Model for Cars Classification</h1>
+        <h1>Model <b>Results</b></h1>
+        <iframe src="{{ url_for('static', path=chart_filepath) }}" title="classification-results-chart"></iframe>
+        <br /><br />
+        <p>Disclaimer: Model is trained to recognize F1 cars <b>only from 2019 season</b>. It is <b>unable to generalize.</b><br /> It could <b>classify other images incorrectly</b> (e.g. from other seasons or from different contexts at all).</p>
+        <br />
+        <a href="/">Go back to the <b>homepage</b></a>
+      </div>
+      <div id="submission">
+        <br /><br />
+        <h1>Submitted <b>Image</b></h1>
+        <img src="{{ url_for('static', path=content_filepath) }}" width="800" height="600" />
+        <br /><br />
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
