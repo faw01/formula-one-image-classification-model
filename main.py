@@ -1,6 +1,11 @@
 import base64
 import os
 import glob
+import time
+import argparse
+from minio import Minio
+from minio.error import InvalidResponseError
+import urllib3
 
 import uvicorn
 from fastapi import FastAPI, UploadFile, File, Request
@@ -10,13 +15,36 @@ from fastapi.templating import Jinja2Templates
 
 from assets import functions as fct
 
-#TODO: could move it to docker/minikube app arguments done with argument_parser
-#TODO: enable PC debugging (paths below)
 #TODO: check why we are getting different results minikube vs PC
 
+base_path = '/app/'
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-m', '--minio-url')
+parser.add_argument('-a', '--access-key')
+parser.add_argument('-s', '--secret-key')
+args = parser.parse_args()
+
+#TODO: debug why it doesn't work on minikube
+if 'RUN_ON_MINIKUBE' not in os.environ:
+    base_path = ''
+    os.environ["MINIO_ACCESS_KEY"] = args.access_key
+    os.environ["MINIO_SECRET_ACCESS_KEY"] = args.secret_key
+    os.environ["MINIO_URL"] = args.minio_url
+
+httpClient = urllib3.PoolManager(cert_reqs="CERT_NONE")
+
+minio_client = Minio(os.environ["MINIO_URL"],
+               access_key=os.environ['MINIO_ACCESS_KEY'],
+               secret_key=os.environ['MINIO_SECRET_ACCESS_KEY'],
+               http_client=httpClient
+              )
+
+bucket_name = "classify"
+
 label_to_class, model = fct.initialize_model(
-    path = '/app/models/f1-racecar-image-classifier.h5',
-    input_path = '/app/input/formula-one-cars-images/train'
+    path = '{}models/f1-racecar-image-classifier.h5'.format(base_path),
+    input_path = '{}input/formula-one-cars-images/train'.format(base_path)
 )
 
 app = FastAPI()
@@ -48,6 +76,11 @@ def dynamic_file(request: Request):
 @app.post("/predict")
 def dynamic(request: Request, file: UploadFile = File()):
 
+    if 'RUN_ON_MINIKUBE' not in os.environ:
+        local_debugging = False
+    else:
+        local_debugging = True
+
     is_image = 0
 
     base64_extensions = {
@@ -63,6 +96,7 @@ def dynamic(request: Request, file: UploadFile = File()):
     for f in files:
         os.remove(f)
 
+    original_filename = file.filename
     data = file.file.read()
     file.file.close()
 
@@ -82,6 +116,12 @@ def dynamic(request: Request, file: UploadFile = File()):
         binary_file.write(data)
     binary_file.close()
 
+    current_timestamp = int(str(time.time()).replace('.', ''))
+
+    minio_client.fput_object(
+        bucket_name, '{}_{}'.format(current_timestamp, original_filename), source_content_filepath
+    )
+
     if is_image == 1:
         response = fct.predict_image(
             source_content_filepath, 
@@ -89,7 +129,7 @@ def dynamic(request: Request, file: UploadFile = File()):
             label_to_class
         )
         target_chart_html_file = fct.make_chart(response)
-    
+
     result_content_filepath = source_content_filepath.replace('./static/', '')
     chart_html_file = target_chart_html_file.replace('./static/', '')
 
@@ -99,7 +139,8 @@ def dynamic(request: Request, file: UploadFile = File()):
             "output": response, 
             "is_image": is_image,
             "content_filepath": result_content_filepath,
-            "chart_filepath": chart_html_file
+            "chart_filepath": chart_html_file,
+            "debugging_local": local_debugging
             }
         )     
 

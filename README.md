@@ -17,12 +17,25 @@ Repository holds code and data for image classification model - of cars represen
 
 # Docker image
 ## Building
-`docker build --no-cache -t f1-image-classification-model:v0.8 -f Dockerfile .`
+```
+docker build --no-cache \
+--build-arg MINIO_URL="<change_me>" \
+--build-arg MINIO_ACCESS_KEY="<change_me>" \
+--build-arg MINIO_SECRET_KEY="<change_me>" \
+-t f1-image-classification-model:v0.9 -f Dockerfile .
+```
+
 ## Running
-`docker run -it f1-image-classification-model:v0.8`
+```
+docker run -it \
+-e MINIO_URL="<change_me>" \
+-e MINIO_ACCESS_KEY="<change_me>" \
+-e MINIO_SECRET_KEY="<change_me>" \
+f1-image-classification-model:v0.9
+```
 
 # Adding image to use in minikube
-`minikube image load f1-image-classification-model:v0.8`
+`minikube image load f1-image-classification-model:v0.9`
 
 # Example
 ## Homepage
